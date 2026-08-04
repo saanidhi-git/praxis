@@ -1,0 +1,36 @@
+# Praxis ML pipeline — CPU only, no GPU required anywhere in this file.
+# Install into the project-local venv:  D:\KPMG\praxis\lmsenv
+
+# --- core ---
+numpy==2.2.1
+pandas==2.2.3
+scipy==1.15.1
+
+# --- modeling ---
+scikit-learn==1.6.1
+lightgbm==4.5.0
+
+# --- text features ---
+# sentence-transformers pulls torch (CPU wheel); MiniLM is 22M params and
+# runs comfortably on CPU. Kept optional — TF-IDF baseline works without it.
+# sentence-transformers==3.3.1
+
+# --- code metrics (feature engineering for the grading model) ---
+radon==6.0.1
+
+# --- calibration / conformal / interpretability ---
+shap==0.46.0
+
+# --- serving ---
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+pydantic==2.10.5
+joblib==1.4.2
+
+# --- notebooks & figures ---
+jupyter==1.1.1
+matplotlib==3.10.0
+seaborn==0.13.2
+
+# --- testing ---
+pytest==8.3.4

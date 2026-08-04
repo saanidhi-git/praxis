@@ -1,0 +1,24 @@
+{
+  "name": "praxis",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Praxis — graded code, moderated answers. AI-augmented code assessment and moderated doubt resolution for classrooms.",
+  "workspaces": [
+    "apps/*",
+    "services/executor",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "npm run dev --workspace=@praxis/api & npm run dev --workspace=@praxis/web",
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "test:fsm": "npm run test:fsm --workspace=@praxis/api",
+    "test:injection": "npm run test:injection --workspace=@praxis/api",
+    "test:sandbox": "npm run test --workspace=@praxis/executor",
+    "lint": "npm run lint --workspaces --if-present"
+  },
+  "license": "MIT"
+}

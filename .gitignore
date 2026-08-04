@@ -1,0 +1,54 @@
+# --- dependencies ---
+node_modules/
+.pnp
+.pnp.js
+.npm-cache/
+
+# --- python env (project-local, lives on D:) ---
+lmsenv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# --- secrets ---
+.env
+.env.*
+!.env.example
+
+# --- build output ---
+dist/
+build/
+.next/
+out/
+*.tsbuildinfo
+
+# --- ML data & artifacts (regenerable; keep out of git history) ---
+ml/data/raw/*
+ml/data/interim/*
+ml/data/processed/*
+ml/artifacts/*
+!ml/data/raw/.gitkeep
+!ml/data/interim/.gitkeep
+!ml/data/processed/.gitkeep
+!ml/artifacts/.gitkeep
+
+# figures ARE committed - they go in the submission PDF
+!ml/reports/figures/
+
+# --- logs / os / editor ---
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+
+# --- coverage ---
+coverage/
+.nyc_output/
+htmlcov/
+.coverage
