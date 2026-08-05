@@ -4,7 +4,13 @@ import { z } from 'zod';
 
 const schema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
+
+  // Render, Railway and Heroku inject PORT and expect the process to bind it.
+  // API_PORT stays for local use; PORT wins when present.
+  PORT: z.coerce.number().int().positive().optional(),
   API_PORT: z.coerce.number().int().positive().default(4000),
+
+  // Comma-separated. Set this to the deployed frontend origin in production.
   CORS_ORIGIN: z.string().default('http://localhost:3000'),
 
   JWT_SECRET: z.string().min(8).default('dev-only-secret-change-me'),
@@ -38,5 +44,8 @@ if (!parsed.success) {
 }
 
 export const env = parsed.data;
+
+/** Port to bind. Honours the platform-injected PORT before the local default. */
+export const PORT = env.PORT ?? env.API_PORT;
 
 export const isMockLLM = env.LLM_PROVIDER === 'mock' || !env.GROQ_API_KEY;
