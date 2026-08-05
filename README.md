@@ -43,7 +43,7 @@ An AI-assisted coding practice platform where every AI-written answer is reviewe
 
 ---
 
-## Try It
+## Live Links
 
 | | |
 |---|---|
