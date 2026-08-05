@@ -150,13 +150,25 @@ export async function history(answerId: Types.ObjectId | string) {
   return AnswerTransition.find({ answerId }).sort({ at: 1 }).lean();
 }
 
-export async function reviewQueue(limit = 50) {
+export interface QueueRow {
+  _id: Types.ObjectId;
+  doubtId: Types.ObjectId;
+  content: string;
+  state: AnswerState;
+  version: number;
+  authoredBy: string;
+  createdAt?: Date;
+  triage?: { topic?: string; urgency?: string; confidence?: number; lane?: string };
+  llm?: { injectionFlagged?: boolean; injectionSignals?: string[]; provider?: string };
+}
+
+export async function reviewQueue(limit = 50): Promise<QueueRow[]> {
   const urgencyRank = { high: 0, medium: 1, low: 2 } as const;
 
-  const rows = await Answer.find({ state: 'pending' })
+  const rows = (await Answer.find({ state: 'pending' })
     .sort({ createdAt: 1 })
     .limit(limit * 3)
-    .lean();
+    .lean()) as unknown as QueueRow[];
 
   return rows
     .sort((a, b) => {
@@ -164,8 +176,7 @@ export async function reviewQueue(limit = 50) {
       const ub = urgencyRank[(b.triage?.urgency ?? 'low') as keyof typeof urgencyRank];
       if (ua !== ub) return ua - ub;
       return (
-        new Date(a.createdAt as unknown as string).getTime() -
-        new Date(b.createdAt as unknown as string).getTime()
+        new Date(a.createdAt ?? 0).getTime() - new Date(b.createdAt ?? 0).getTime()
       );
     })
     .slice(0, limit);
