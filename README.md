@@ -1,7 +1,8 @@
 <div align="center">
 
 # Praxis
-
+##
+###
 ### Practice code. Get answers you can trust.
 
 An AI-assisted coding practice platform where every AI-written answer is reviewed by a teacher before a student can read it.
